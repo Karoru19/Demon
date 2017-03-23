@@ -11,8 +11,12 @@
 int compare(char* v1, char* v2);
 
 int main(int argc, char* argv[]) {
+    char s[7] = "--eject";
+    printf("%s is compare to %s and is: %d\n",argv[1],s,compare(argv[1],s));
+    exit(EXIT_FAILURE);
+
     pid_t pid, sid;
-        
+
     pid = fork();
     if (pid < 0) {
         exit(EXIT_FAILURE);
@@ -28,26 +32,23 @@ int main(int argc, char* argv[]) {
         printf("Cannot open log file!\n");
         exit(EXIT_FAILURE);
     }
-                
+
     sid = setsid();
     if (sid < 0) {
         fprintf(log,"Cannot set id session!\n");
         exit(EXIT_FAILURE);
     }
-        
+
     if ((chdir("/")) < 0) {
         fprintf(log,"Cannot change working directory!\n");
         exit(EXIT_FAILURE);
     }
-        
+
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
-        
+
     while (1) {
-        char* s = "--eject ";
-        if(strcmp(argv[1],s)) printf("XD\n");
-        else if(!strcmp(argv[1],s)) printf("LOL\n");
         if (argc == 1) exit(EXIT_FAILURE);
         else if(argv[1] == "--eject"){
             system("eject");
@@ -61,5 +62,8 @@ int main(int argc, char* argv[]) {
 }
 
 int compare(char* v1, char* v2) {
-    if (sizeof(v1)!=sizeof(v2)) exit(EXIT_FAILURE);
+    int i,len =strlen(v1);
+    if (len!=strlen(v2)) return 1;
+    for (i=0;i<len;i++) if(v1[i]!=v2[i]) return 1;
+    return 0;
 }
