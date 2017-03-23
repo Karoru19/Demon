@@ -8,6 +8,8 @@
 #include <syslog.h>
 #include <string.h>
 
+int compare(char* v1, char* v2);
+
 int main(int argc, char* argv[]) {
     pid_t pid, sid;
         
@@ -56,4 +58,8 @@ int main(int argc, char* argv[]) {
     }
     fclose (log);
     exit(EXIT_SUCCESS);
+}
+
+int compare(char* v1, char* v2) {
+    if (sizeof(v1)!=sizeof(v2)) exit(EXIT_FAILURE);
 }
