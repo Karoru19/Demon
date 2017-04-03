@@ -7,4 +7,3 @@ config default () {
 	conf.byte = MB;
 	return conf;
 }
-
