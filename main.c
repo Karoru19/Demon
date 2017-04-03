@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
       {
         while ((dir = readdir(d)) != NULL)
         {
-          printf("%s\n", dir->d_name);
+          printf("%s\t%s\n", dir->d_type == DT_DIR ? "DIRECTORY:":"FILE:",dir->d_name);
         }
       closedir(d);
       }
