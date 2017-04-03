@@ -7,7 +7,23 @@ This program supposed to sync files in source folder with destination folder.
 In terminal write
 
 ```
+make
+```
+
+## Running
+
+In terminal write
+
+```
 ./build/demon
+```
+
+## Remove
+
+In terminal write
+
+```
+make clean
 ```
 
 ## Built With
