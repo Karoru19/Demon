@@ -2,7 +2,8 @@
 #define CONFIG_H
 
 #include <stdlib.h>
-#include "string.h"
+#include "cstring.h"
+#include "bool.h"
 
 #define minute 60
 #define hour ( 60 * minute )
@@ -18,6 +19,6 @@ struct config {
 	string pathTo;
 };
 
-config default ();
+struct config default_config ();
 
 #endif

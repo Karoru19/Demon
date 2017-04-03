@@ -6,7 +6,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <syslog.h>
-#include "include/string.h"
+#include "include/cstring.h"
 
 int main(int argc, char* argv[]) {
     string s = "--eject";
