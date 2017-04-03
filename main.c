@@ -9,9 +9,9 @@
 #include "include/cstring.h"
 
 int main(int argc, char* argv[]) {
-    string s = "--eject";
-    if (argc >1)
-    printf("%s is compared to: %s and it's: %d\n",argv[1],s,compare(argv[1],s));
+
+    if (argc >2)
+    printf("%s is compared to: %s and it's: %d\n",argv[1],argv[2],compare(argv[1],argv[2]));
     exit(EXIT_SUCCESS);
 
     pid_t pid, sid;
@@ -48,11 +48,6 @@ int main(int argc, char* argv[]) {
     close(STDERR_FILENO);
 
     while (1) {
-        if (argc == 1) exit(EXIT_FAILURE);
-        else if(argv[1] == "--eject"){
-            system("eject");
-            sleep(5);
-            system("eject -t");
             sleep(30); /* wait 30 seconds */
         }
     }
