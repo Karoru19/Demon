@@ -6,14 +6,13 @@
 #include <errno.h>
 #include <unistd.h>
 #include <syslog.h>
-#include <string.h>
-
-int compare(char* v1, char* v2);
+#include "include/string.h"
 
 int main(int argc, char* argv[]) {
-    char s[7] = "--eject";
-    printf("%s is compare to %s and is: %d\n",argv[1],s,compare(argv[1],s));
-    exit(EXIT_FAILURE);
+    string s = "--eject";
+    if (argc >1)
+    printf("%s is compared to: %s and it's: %d\n",argv[1],s,compare(argv[1],s));
+    exit(EXIT_SUCCESS);
 
     pid_t pid, sid;
 
@@ -59,11 +58,4 @@ int main(int argc, char* argv[]) {
     }
     fclose (log);
     exit(EXIT_SUCCESS);
-}
-
-int compare(char* v1, char* v2) {
-    int i,len =strlen(v1);
-    if (len!=strlen(v2)) return 1;
-    for (i=0;i<len;i++) if(v1[i]!=v2[i]) return 1;
-    return 0;
 }
