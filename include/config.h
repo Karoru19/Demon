@@ -11,14 +11,14 @@
 #define MB ( 1024 * kB )
 #define GB ( 1024 * MB )
 
-struct config {
+typedef struct {
 	bool recursive;
 	int time;
 	size_t byte;
 	string pathFrom;
 	string pathTo;
-};
+} config;
 
-struct config default_config ();
+config default_config ();
 
 #endif

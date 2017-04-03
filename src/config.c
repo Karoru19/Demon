@@ -1,7 +1,7 @@
-#include "../include/config.h"
+#include "config.h"
 
-struct config default_default () {
-	struct config conf;
+config default_config () {
+	config conf;
 	conf.recursive = false;
 	conf.time = 5 * minute;
 	conf.byte = MB;

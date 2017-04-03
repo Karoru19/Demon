@@ -6,7 +6,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <syslog.h>
-#include "include/cstring.h"
+#include "config.h"
 #include <dirent.h>
 
 int main(int argc, char* argv[]) {
