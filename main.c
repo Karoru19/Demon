@@ -7,8 +7,30 @@
 #include <unistd.h>
 #include <syslog.h>
 #include "include/cstring.h"
+#include <dirent.h>
 
 int main(int argc, char* argv[]) {
+
+    if (argc > 1)
+    {
+      DIR           *d;
+      struct dirent *dir;
+      d = opendir(argv[1]);
+
+      if (d)
+      {
+        while ((dir = readdir(d)) != NULL)
+        {
+          printf("%s\n", dir->d_name);
+        }
+      closedir(d);
+      }
+      else
+      {
+        printf("Error while opening directory!\n");
+      }
+      exit(EXIT_SUCCESS);
+    }
 
     if (argc >2)
     printf("%s is compared to: %s and it's: %d\n",argv[1],argv[2],compare(argv[1],argv[2]));
@@ -49,8 +71,8 @@ int main(int argc, char* argv[]) {
 
     while (1) {
             sleep(30); /* wait 30 seconds */
-        }
     }
+
     fclose (log);
     exit(EXIT_SUCCESS);
 }
