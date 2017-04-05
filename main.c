@@ -10,6 +10,7 @@
 #include <dirent.h>
 #include "bool.h"
 #include "cstring.h"
+#include <stdlib.h>
 
 bool isDirectory(string path)
 {
@@ -33,6 +34,8 @@ bool isDirectory(string path)
 }
 
 int main(int argc, char* argv[]) {
+
+  unsigned int syncTime = 300;
 /*
     if (argc > 1)
     {
@@ -55,7 +58,7 @@ int main(int argc, char* argv[]) {
       exit(EXIT_SUCCESS);
     }
 */
-    if (argc >2)
+    if (argc == 3)
     {
       if(isDirectory(argv[1]) == true && isDirectory(argv[2]) == true)
       {
@@ -66,6 +69,16 @@ int main(int argc, char* argv[]) {
         printf("Paths must lead to directories !\n");
         exit(EXIT_FAILURE);
       }
+    }
+    else if (argc == 4)
+    {
+      char* p;
+      errno = 0;
+      int arg = strtol(argv[3], &p, 10);  //convert char->int
+      if (*p != '\0' || errno != 0) return 1; //check for correct value
+      syncTime = arg;
+
+      printf("Synctime: %d\n", syncTime);
     }
     else
     {
@@ -107,7 +120,7 @@ int main(int argc, char* argv[]) {
     close(STDERR_FILENO);
 
     while (1) {
-            sleep(30); /* wait 30 seconds */
+            sleep(syncTime);
     }
 
     fclose (log);
