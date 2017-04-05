@@ -33,6 +33,21 @@ bool isDirectory(string path)
   }
 }
 
+void sync (string source, string target)  //todo
+{
+  DIR           *ds,*dt;
+  struct dirent *dirS,*dirT;
+  ds = opendir(source);
+  dt = opendir(target);
+
+  dirT = readdir(dt);
+
+  while((dirS = readdir(ds)) != NULL)
+  {
+
+  }
+}
+
 int main(int argc, char* argv[]) {
 
   unsigned int syncTime = 300;
