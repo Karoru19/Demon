@@ -8,9 +8,32 @@
 #include <syslog.h>
 #include "config.h"
 #include <dirent.h>
+#include "bool.h"
+#include "cstring.h"
+
+bool isDirectory(string path)
+{
+  DIR           *d;
+  struct dirent *dir;
+  d = opendir(path);
+  dir = readdir(d);
+  closedir(d);
+  if(dir == NULL)
+  {
+      return false;
+  }
+  else if(dir->d_type == DT_DIR)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
 
 int main(int argc, char* argv[]) {
-
+/*
     if (argc > 1)
     {
       DIR           *d;
@@ -31,10 +54,24 @@ int main(int argc, char* argv[]) {
       }
       exit(EXIT_SUCCESS);
     }
-
+*/
     if (argc >2)
-    printf("%s is compared to: %s and it's: %d\n",argv[1],argv[2],compare(argv[1],argv[2]));
-    exit(EXIT_SUCCESS);
+    {
+      if(isDirectory(argv[1]) == true && isDirectory(argv[2]) == true)
+      {
+        printf("ok\n");
+      }
+      else
+      {
+        printf("Paths must lead to directories !\n");
+        exit(EXIT_FAILURE);
+      }
+    }
+    else
+    {
+      printf("Too few arguments !\n");
+      exit(EXIT_FAILURE);
+    }
 
     pid_t pid, sid;
 
