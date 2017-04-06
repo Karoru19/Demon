@@ -6,6 +6,7 @@
 #include <syslog.h>
 #include "config.h"
 #include "dir.h"
+#include "list.h"
 
 void sync_dir (string source, string target)  //todo
 {
@@ -23,6 +24,14 @@ void sync_dir (string source, string target)  //todo
 }
 
 int main(int argc, char* argv[]) {
+
+    el_listy *root;
+        root = malloc(sizeof(el_listy));
+        root->name = "test5";
+        root->path = "test6";
+        root->next = NULL;
+        addToList("test", "test2", root);
+        showList(root);
 
 //    if (argc > 1)
 //    {
