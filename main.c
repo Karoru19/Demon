@@ -1,39 +1,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <unistd.h>
 #include <syslog.h>
 #include "config.h"
-#include <dirent.h>
-#include "bool.h"
-#include "cstring.h"
-#include <stdlib.h>
+#include "dir.h"
 
-bool isDirectory(string path)
-{
-  DIR           *d;
-  struct dirent *dir;
-  d = opendir(path);
-  dir = readdir(d);
-  closedir(d);
-  if(dir == NULL)
-  {
-      return false;
-  }
-  else if(dir->d_type == DT_DIR)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
-}
-
-void sync (string source, string target)  //todo
+void sync_dir (string source, string target)  //todo
 {
   DIR           *ds,*dt;
   struct dirent *dirS,*dirT;
@@ -50,30 +24,16 @@ void sync (string source, string target)  //todo
 
 int main(int argc, char* argv[]) {
 
-  unsigned int syncTime = 300;
-/*
-    if (argc > 1)
-    {
-      DIR           *d;
-      struct dirent *dir;
-      d = opendir(argv[1]);
+//    if (argc > 1)
+//    {
+//        check_directory(argv[1], true);
+//        exit(EXIT_SUCCESS);
+//    }
 
-      if (d)
-      {
-        while ((dir = readdir(d)) != NULL)
-        {
-          printf("%s\t%s%s\n", dir->d_type == DT_DIR ? "DIRECTORY:":"FILE:     ",argv[1],dir->d_name);
-        }
-      closedir(d);
-      }
-      else
-      {
-        printf("Error while opening directory!\n");
-        exit(EXIT_FAILURE);
-      }
-      exit(EXIT_SUCCESS);
-    }
-*/
+    config Config = default_config();
+    Config.pathFrom = argv[1];
+    Config.pathTo = argv[2];
+
     if (argc == 3)
     {
       if(isDirectory(argv[1]) == true && isDirectory(argv[2]) == true)
@@ -92,15 +52,16 @@ int main(int argc, char* argv[]) {
       errno = 0;
       int arg = strtol(argv[3], &p, 10);  //convert char->int
       if (*p != '\0' || errno != 0) return 1; //check for correct value
-      syncTime = arg;
+      Config.time = arg;
 
-      printf("Synctime: %d\n", syncTime);
+      printf("Synctime: %d\n", Config.time);
     }
     else
     {
       printf("Too few arguments !\n");
       exit(EXIT_FAILURE);
     }
+    exit(EXIT_SUCCESS);
 
     pid_t pid, sid;
 
@@ -136,7 +97,7 @@ int main(int argc, char* argv[]) {
     close(STDERR_FILENO);
 
     while (1) {
-            sleep(syncTime);
+            sleep(30); /* wait 30 seconds */
     }
 
     fclose (log);
