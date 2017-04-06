@@ -21,13 +21,14 @@ int main(int argc, char* argv[]) {
       {
         while ((dir = readdir(d)) != NULL)
         {
-          printf("%s\t%s\n", dir->d_type == DT_DIR ? "DIRECTORY:":"FILE:",dir->d_name);
+          printf("%s\t%s%s\n", dir->d_type == DT_DIR ? "DIRECTORY:":"FILE:     ",argv[1],dir->d_name);
         }
       closedir(d);
       }
       else
       {
         printf("Error while opening directory!\n");
+        exit(EXIT_FAILURE);
       }
       exit(EXIT_SUCCESS);
     }
