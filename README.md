@@ -32,8 +32,8 @@ make clean
 
 ## Authors
 
-* **Karol Budlewski** - *Initial work* - [CharlesXIX](https://bitbucket.org/CharlesXIX/)
-* **Maciej Więckowski** - *Sync* - [Macwie](https://bitbucket.org/Macwie/)
+* **Karol Budlewski** - *Initial work* - [Karoru19](https://github.com/Karoru19)
+* **Maciej Więckowski** - *Sync* - [Macwie](https://github.com/Macwie)
 
 See also the list of [contributors](https://bitbucket.org/so2137/profile/members) who participated in this project.
 
