@@ -4,6 +4,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <syslog.h>
+#include <stdio.h>
 #include "config.h"
 #include "dir.h"
 #include "list.h"
@@ -24,6 +25,30 @@ void sync_dir (string source, string target)  //todo
   }
 }
 
+int copy_file(char *fileName)
+	{
+		FILE  *original, *copy;
+		int  a;
+    string target = "/home/macwie/Pulpit/test2/plik.txt";
+
+		original = fopen(fileName, "rb");
+		copy = fopen(target, "wb");
+
+		while(1)
+		{
+			a  =  fgetc(original);
+
+			if(!feof(original))
+				fputc(a, copy);
+			else
+				break;
+		}
+
+		fclose(copy);
+		fclose(original);
+		return  0;
+	}
+
 int main(int argc, char* argv[]) {
 
     list *root;
@@ -40,6 +65,7 @@ int main(int argc, char* argv[]) {
         printf("List size: %d\n", listSize(root));
 
         check_directory(argv[1], true);
+        copy_file("/home/macwie/Pulpit/test/plik.txt");
 
 //    if (argc > 1)
 //    {
