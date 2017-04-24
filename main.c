@@ -26,13 +26,18 @@ void sync_dir (string source, string target)  //todo
 
 int main(int argc, char* argv[]) {
 
-    el_listy *root;
-        root = malloc(sizeof(el_listy));
+    list *root;
+        root = malloc(sizeof(list));
         root->name = "test5";
         root->path = "test6";
         root->next = NULL;
         addToList("test", "test2", root);
         showList(root);
+        listSize(root);
+        deleteItem(root, "test2");
+        printf("\n");
+        showList(root);
+        printf("List size: %d\n", listSize(root));
 
 //    if (argc > 1)
 //    {
