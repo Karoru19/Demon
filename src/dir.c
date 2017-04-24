@@ -5,6 +5,7 @@ bool isDirectory(string path)
   DIR           *d;
   struct dirent *dir;
   d = opendir(path);
+  if (d == NULL) return false;
   dir = readdir(d);
   closedir(d);
   if(dir == NULL)

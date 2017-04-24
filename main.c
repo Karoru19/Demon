@@ -7,6 +7,7 @@
 #include "config.h"
 #include "dir.h"
 #include "list.h"
+#include "parse.h"
 
 void sync_dir (string source, string target)  //todo
 {
@@ -40,35 +41,26 @@ int main(int argc, char* argv[]) {
 //    }
 
     config Config = default_config();
-    Config.pathFrom = argv[1];
-    Config.pathTo = argv[2];
 
-    if (argc == 3)
-    {
-      if(isDirectory(argv[1]) == true && isDirectory(argv[2]) == true)
-      {
-        printf("ok\n");
-      }
-      else
-      {
-        printf("Paths must lead to directories !\n");
+    if (parse(argc, argv, &Config) == false) {
+        printf("Parsing failure!\n");
         exit(EXIT_FAILURE);
-      }
     }
-    else if (argc == 4)
+    printf("%s\n",Config.pathFrom);
+    printf("%s\n",Config.pathTo);
+    printf("%s\n",Config.recursive == 1 ? "recursive":"not recursive");
+    printf("%zd\n",Config.byte);
+    printf("%d\n",Config.time);
+
+    if (argc == 4)
     {
       char* p;
       errno = 0;
       int arg = strtol(argv[3], &p, 10);  //convert char->int
-      if (*p != '\0' || errno != 0) return 1; //check for correct value
+      if (*p != '\0' || errno != 0) {printf("lolxd\n");return 1;} //check for correct value
       Config.time = arg;
 
       printf("Synctime: %d\n", Config.time);
-    }
-    else
-    {
-      printf("Too few arguments !\n");
-      exit(EXIT_FAILURE);
     }
     exit(EXIT_SUCCESS);
 
