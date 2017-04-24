@@ -39,6 +39,8 @@ int main(int argc, char* argv[]) {
         showList(root);
         printf("List size: %d\n", listSize(root));
 
+        check_directory(argv[1], true);
+
 //    if (argc > 1)
 //    {
 //        check_directory(argv[1], true);
