@@ -10,7 +10,6 @@
 #include "cstring.h"
 
 bool initSync(config *conf);
-bool sync_dir ();
-void test();
+bool syncDir ();
 
 #endif

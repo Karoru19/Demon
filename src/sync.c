@@ -73,12 +73,80 @@ bool initSync(config *conf)
 
 }
 
-bool sync_dir ()
+void copyFile(string source, string target)
 {
+		FILE  *original, *copy;
+		int  a;
+
+		original = fopen(source, "rb");
+		copy = fopen(target, "wb");
+
+		while(1)
+		{
+			a  =  fgetc(original);
+
+			if(!feof(original))
+				fputc(a, copy);
+			else
+				break;
+		}
+
+		fclose(copy);
+		fclose(original);
 
 }
 
-void test()
+void removeFile(string file)
 {
-  printf("TEEEEST\n");
+    remove(file);
+}
+
+bool syncDir ()
+{
+
+  if(sSize > tSize)
+  {
+    list *s = sourceF;
+    list *t = targetF;
+    int i;
+    string slash = "/";
+
+    for(i = 0; i<sSize; i++)
+    {
+      if(s->name != t->name)
+      {
+        string target = (string)malloc(1+strlen(Config->pathTo)+strlen(slash)+strlen(s->name));
+        strcpy(target, Config->pathTo);
+        strcat(target, slash);
+        strcat(target, s->name);
+
+        copyFile(s->path, target);
+
+        addToList(s->name, target, targetF);
+
+        if(s->next != NULL)
+          s = s->next;
+        else
+          break;
+        if(tSize > 0)
+          t = t->next;
+        tSize++;
+      }
+    }
+  }
+  else if(sSize < tSize)
+  {
+    list *s = sourceF;
+    list *t = targetF;
+    int i;
+    string slash = "/";
+
+    //todo funkcja która znajduje różnice między dwoma listami i zwraca ją jako liste
+
+
+  }
+
+
+
+
 }

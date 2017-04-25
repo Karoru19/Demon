@@ -11,31 +11,6 @@
 #include "parse.h"
 #include "sync.h"
 
-
-int copy_file(char *fileName)
-	{
-		FILE  *original, *copy;
-		int  a;
-    string target = "/home/macwie/Pulpit/test2/plik.txt";
-
-		original = fopen(fileName, "rb");
-		copy = fopen(target, "wb");
-
-		while(1)
-		{
-			a  =  fgetc(original);
-
-			if(!feof(original))
-				fputc(a, copy);
-			else
-				break;
-		}
-
-		fclose(copy);
-		fclose(original);
-		return  0;
-	}
-
 int main(int argc, char* argv[]) {
 
 /* NOTES
@@ -43,23 +18,6 @@ stat() - for getting info about las modification date and file size and so on
 utime()/utimes() - for setting modification date
 SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-sigusr2
 */
-
-/*                    LIST TESTING
-    list *root;
-    root = malloc(sizeof(list));
-    addToList("testowanie","na ekranie",root);
-    addToList("test", "test2", root);
-    addToList("test1", "test3", root);
-    showList(root);
-
-    deleteItem(root, "test2");
-    printf("\n");
-    showList(root);
-    printf("List size: %d\n", listSize(root));
-    printf("\n");
-*/
-        //check_directory(argv[1], true);
-        //copy_file("/home/macwie/Pulpit/test/plik.txt");
 
     config Config = default_config();
 
@@ -103,6 +61,7 @@ SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-
     }
 
     initSync(&Config);
+    syncDir();
 
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
