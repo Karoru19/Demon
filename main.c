@@ -9,21 +9,8 @@
 #include "dir.h"
 #include "list.h"
 #include "parse.h"
+#include "sync.h"
 
-void sync_dir (string source, string target)  //todo
-{
-  DIR           *ds,*dt;
-  struct dirent *dirS,*dirT;
-  ds = opendir(source);
-  dt = opendir(target);
-
-  dirT = readdir(dt);
-
-  while((dirS = readdir(ds)) != NULL)
-  {
-
-  }
-}
 
 int copy_file(char *fileName)
 	{
@@ -57,6 +44,7 @@ utime()/utimes() - for setting modification date
 SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-sigusr2
 */
 
+/*                    LIST TESTING
     list *root;
     root = malloc(sizeof(list));
     addToList("testowanie","na ekranie",root);
@@ -69,17 +57,9 @@ SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-
     showList(root);
     printf("List size: %d\n", listSize(root));
     printf("\n");
-    /*deleteList(root);
-    showList(root);*/
-
+*/
         //check_directory(argv[1], true);
         //copy_file("/home/macwie/Pulpit/test/plik.txt");
-
-//    if (argc > 1)
-//    {
-//        check_directory(argv[1], true);
-//        exit(EXIT_SUCCESS);
-//    }
 
     config Config = default_config();
 
@@ -92,18 +72,6 @@ SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-
     printf("%s\n",Config.recursive == 1 ? "recursive":"not recursive");
     printf("%zd\n",Config.byte);
     printf("%d\n",Config.time);
-
-    if (argc == 4)
-    {
-      char* p;
-      errno = 0;
-      int arg = strtol(argv[3], &p, 10);  //convert char->int
-      if (*p != '\0' || errno != 0) {printf("lolxd\n");return 1;} //check for correct value
-      Config.time = arg;
-
-      printf("Synctime: %d\n", Config.time);
-    }
-    exit(EXIT_SUCCESS);
 
     pid_t pid, sid;
 
@@ -133,6 +101,8 @@ SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-
         fprintf(log,"Cannot change working directory!\n");
         exit(EXIT_FAILURE);
     }
+
+    initSync(&Config);
 
     close(STDIN_FILENO);
     close(STDOUT_FILENO);

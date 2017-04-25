@@ -49,7 +49,9 @@ void showList (list *first)
 
 int listSize (list *first)
 {
+
     list *wsk = first;
+
     int x=1;
 
     while (wsk->next!=NULL)
