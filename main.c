@@ -61,18 +61,19 @@ SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-
     root = malloc(sizeof(list));
     addToList("testowanie","na ekranie",root);
     addToList("test", "test2", root);
+    addToList("test1", "test3", root);
     showList(root);
-    listSize(root);
+
     deleteItem(root, "test2");
     printf("\n");
     showList(root);
     printf("List size: %d\n", listSize(root));
     printf("\n");
-    deleteList(root);
-    showList(root);
+    /*deleteList(root);
+    showList(root);*/
 
-        check_directory(argv[1], true);
-        copy_file("/home/macwie/Pulpit/test/plik.txt");
+        //check_directory(argv[1], true);
+        //copy_file("/home/macwie/Pulpit/test/plik.txt");
 
 //    if (argc > 1)
 //    {
