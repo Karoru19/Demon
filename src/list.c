@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void addToList (string nameData, string pathData, el_listy *head) {
-    el_listy *newNode = (el_listy*)malloc(sizeof(el_listy));
+void addToList (string nameData, string pathData, list *first) {
+    list *newNode = (list*)malloc(sizeof(list));
 
     if(newNode == NULL){
         fprintf(stderr, "Unable to allocate memory for new node\n");
@@ -16,15 +16,16 @@ void addToList (string nameData, string pathData, el_listy *head) {
     newNode->path = pathData;
     newNode->next = NULL;
 
-    if(head->name == NULL){
-        head->name = newNode->name;
-        head->path = newNode->path;
+    if(first->name == NULL){
+        first->name = newNode->name;
+        first->path = newNode->path;
+	first->next = newNode->next;
     }
-    else if(head->next == NULL){
-        head->next = newNode;
+    else if(first->next == NULL){
+        first->next = newNode;
     }
     else {
-        el_listy *current = head;
+        list *current = first;
         while (true) {
             if(current->next == NULL) {
                 current->next = newNode;
@@ -35,8 +36,10 @@ void addToList (string nameData, string pathData, el_listy *head) {
     }
 }
 
-void showList (el_listy *pierwszy) {
-    el_listy *wsk = pierwszy;
+void showList (list *first)
+{
+
+    list *wsk = first;
 
     while(wsk!=NULL) {
         printf("%s %s\n", wsk->name, wsk->path);
@@ -44,18 +47,50 @@ void showList (el_listy *pierwszy) {
     }
 }
 
-void deleteList(el_listy *head) {
+int listSize (list *first)
+{
+    list *wsk = first;
+    int x=1;
+
+    while (wsk->next!=NULL)
+    {
+        wsk = wsk->next;
+        x++;
+    }
+
+    return x;
+}
+
+bool deleteItem (list *first, string item)
+{
+
+  if(first == NULL)
+    return false;
+
+    list *wsk = first;
+    list *temp;
+
+    if(compare(wsk->path, item))
+    {
+      first = wsk->next;
+      wsk->name = NULL;
+      wsk->path = NULL;
+      free(wsk);
+      return true;
+    }
+
+void deleteList(list *head) {
     while (head) {
-        el_listy *tmp = head->next;
+        list *tmp = head->next;
         free(head);
         head = tmp;
         }
 }
 
-el_listy* reverseList (el_listy *pierwszy) {
-    el_listy* new_first = NULL;
+list* reverseList (list *pierwszy) {
+    list* new_first = NULL;
     while(pierwszy) {
-        el_listy* next = pierwszy->next;
+        list* next = pierwszy->next;
         pierwszy->next = new_first;
         new_first = pierwszy;
         pierwszy = next;

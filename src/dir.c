@@ -33,16 +33,18 @@ void check_directory (string argv, bool recursive) {
         {
             if (compare(dir->d_name,".") || compare(dir->d_name,"..")) continue;
             if (dir->d_type == DT_DIR && recursive == true) {
-                string tmp;
-                int len = strlen(argv) + strlen(dir->d_name) + 2;
-                tmp=malloc(sizeof * tmp * len);
-                snprintf(tmp, len, "%s%s/", argv, dir->d_name);
-                printf("DIRECTORY %s: \n", tmp);
-                check_directory(tmp, recursive);
-                free(tmp);
+                string dirName = dir->d_name;
+                string slash = "/";
+                string final = (string) malloc(1+strlen(dirName)+strlen(slash)+strlen(argv));
+                strcpy(final, argv);
+                strcat(final, slash);
+                strcat(final, dirName);
+                printf("DIRECTORY %s: \n", final);
+                check_directory(final, recursive);
+                free(final);
             }
             else if (dir->d_type != DT_DIR) {
-                printf("FILE %s%s\n", argv, dir->d_name);
+                printf("FILE %s/%s\n", argv, dir->d_name);
             }
         }
     closedir(d);
