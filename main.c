@@ -51,6 +51,12 @@ int copy_file(char *fileName)
 
 int main(int argc, char* argv[]) {
 
+/* NOTES
+stat() - for getting info about las modification date and file size and so on
+utime()/utimes() - for setting modification date
+SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-sigusr2
+*/
+
     list *root;
         root = malloc(sizeof(list));
         root->name = "test5";
