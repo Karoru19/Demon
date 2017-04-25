@@ -13,5 +13,7 @@ typedef struct lista
 
 void addToList (string name, string path, el_listy *pierwszy);
 void showList (el_listy *pierwszy);
+void deleteList (el_listy *head);
+el_listy* reverseList (el_listy *pierwszy);
 
 #endif

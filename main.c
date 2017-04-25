@@ -27,21 +27,22 @@ void sync_dir (string source, string target)  //todo
 int main(int argc, char* argv[]) {
 
     el_listy *root;
-        root = malloc(sizeof(el_listy));
-        root->name = "test5";
-        root->path = "test6";
-        root->next = NULL;
-        addToList("test", "test2", root);
-        showList(root);
-
-//    if (argc > 1)
-//    {
-//        check_directory(argv[1], true);
-//        exit(EXIT_SUCCESS);
-//    }
+    root = malloc(sizeof(el_listy));
+    addToList("testowanie","na ekranie",root);
+    addToList("test", "test2", root);
+    addToList("testxd", "testlol", root);
+    addToList("testlol", "testxd", root);
+    showList(root);
+    printf("\n");
+    root = reverseList(root);
+    showList(root);
+    printf("\n");
+    deleteList(root);
+    showList(root);
 
     config Config = default_config();
 
+    printf("%s\n%s\n",argv[1],argv[2]);
     if (parse(argc, argv, &Config) == false) {
         printf("Parsing failure!\n");
         exit(EXIT_FAILURE);

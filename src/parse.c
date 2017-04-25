@@ -25,11 +25,11 @@ bool parse (int argc, char* argv[], config *Config) {
                 case 't':
                     if (x == 2 && compare(argv[i],"--time") == false) {
                         printf("Option ERROR!\n");
-                        exit(EXIT_FAILURE);
+                        return false;
                     }
                     if (x == 1 && compare(argv[i],"-t") == false) {
                         printf("Option ERROR!\n");
-                        exit(EXIT_FAILURE);
+                        return false;
                     }
                     if (argc > i+1) {
                         int len=strlen(argv[i+1])-1, j, v=0;
@@ -63,7 +63,7 @@ bool parse (int argc, char* argv[], config *Config) {
                             }
                             else {
                                 printf("Option ERROR!\n");
-                                exit(EXIT_FAILURE);
+                                return false;
                             }
                         }
                         Config->time *= v;
@@ -71,28 +71,28 @@ bool parse (int argc, char* argv[], config *Config) {
                     }
                     else {
                         printf("Option ERROR!\n");
-                        exit(EXIT_FAILURE);
+                        return false;
                     }
                     break;
                 case 'r':
                     if (x == 2 && compare(argv[i],"--recursive") == false) {
                         printf("Option ERROR!\n");
-                        exit(EXIT_FAILURE);
+                        return false;
                     }
                     if (x == 1 && compare(argv[i],"-r") == false) {
                         printf("Option ERROR!\n");
-                        exit(EXIT_FAILURE);
+                        return false;
                     }
                     Config->recursive=true;
                     break;
                 case 'b':
                     if (x == 2 && compare(argv[i],"--byte") == false) {
                         printf("Option ERROR!\n");
-                        exit(EXIT_FAILURE);
+                        return false;
                     }
                     if (x == 1 && compare(argv[i],"-b") == false) {
                         printf("Option ERROR!\n");
-                        exit(EXIT_FAILURE);
+                        return false;
                     }
                     if (argc > i+1) {
                         int len=strlen(argv[i+1])-1, j, v=0;
@@ -132,7 +132,7 @@ bool parse (int argc, char* argv[], config *Config) {
                             }
                             else {
                                 printf("Option ERROR!\n");
-                                exit(EXIT_FAILURE);
+                                return false;
                             }
                         }
                         Config->byte *= v;
@@ -140,7 +140,7 @@ bool parse (int argc, char* argv[], config *Config) {
                     }
                     else {
                         printf("Option ERROR!\n");
-                        exit(EXIT_FAILURE);
+                        return false;
                     }
                     break;
                 default:
