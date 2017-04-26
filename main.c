@@ -5,34 +5,68 @@
 #include <unistd.h>
 #include <syslog.h>
 #include <stdio.h>
+#include <signal.h>
 #include "config.h"
 #include "dir.h"
 #include "list.h"
 #include "parse.h"
 #include "sync.h"
 
+int pidCheck(){
+    FILE *pidId;
+    int s;
+    if ( !( pidId = fopen("/tmp/pidId.txt", "r"))){
+        printf( "File could not be opened to retrieve your data from it.\n" );
+    }
+    else {
+        fseek(pidId, 0, SEEK_END);
+        unsigned long len = (unsigned long)ftell(pidId);
+        if (len > 0) {  //check if the file is empty or not.
+            rewind(pidId);
+            fscanf( pidId, "%d", &s );
+        }
+        fclose( pidId );
+    }
+    //int pom = 0, i;
+    //for (i = 0; i < strlen(s); i++) if (s[i]-'0' > 0 || s[i]-'9' > 0) pom = pom*10+(s[i]-'0');
+    return s;
+}
+
+void pidSave(int pid) {
+    FILE *pidId;
+    pidId = fopen("/tmp/pidId.txt", "w");
+    fprintf(pidId, "%d\n", pid);
+}
+
+void wakeUp() {
+    syslog(LOG_INFO, "Forcing to wake up.");
+}
+
 int main(int argc, char* argv[]) {
 
-/* NOTES
-stat() - for getting info about las modification date and file size and so on
-utime()/utimes() - for setting modification date
-SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-sigusr2
-syslog
-*/
+    signal(SIGUSR1, wakeUp);
+
+    if (argc == 2 && argv[1][0] == '-') {
+        switch (argv[1][1]) {
+        case 'F':
+            syslog(LOG_INFO, "SIGUSR1 is send.");
+            kill(pidCheck(), SIGUSR1);
+            return EXIT_SUCCESS;
+        case 'f':
+            syslog(LOG_INFO, "SIGUSR1 is send.");
+            kill(pidCheck(), SIGUSR1);
+            return EXIT_SUCCESS;
+        }
+        return EXIT_FAILURE;
+    }
 
     config Config = default_config();
     if (parse(argc, argv, &Config) == false) {
-        printf("Parsing failure!\n");
+        syslog(LOG_CRIT,"Parsing failure!\n");
         exit(EXIT_FAILURE);
     }
-    printf("%s\n",Config.pathFrom);
-    printf("%s\n",Config.pathTo);
-    printf("%s\n",Config.recursive == 1 ? "recursive":"not recursive");
-    printf("%zd\n",Config.byte);
-    printf("%d\n",Config.time);
-    syncDir(Config);
-    exit(EXIT_SUCCESS);
 
+    syslog(LOG_INFO, "Demon startup.");
     pid_t pid, sid;
 
     pid = fork();
@@ -40,25 +74,21 @@ syslog
         exit(EXIT_FAILURE);
     }
     if (pid > 0) {
+        printf("Child process created: %d\n", pid);
+        pidSave(pid);
         exit(EXIT_SUCCESS);
     }
-
+    //exit(EXIT_SUCCESS);
     umask(0);
-
-    FILE *log;
-    if((log = fopen("log","w"))==NULL) {
-        printf("Cannot open log file!\n");
-        exit(EXIT_FAILURE);
-    }
 
     sid = setsid();
     if (sid < 0) {
-        fprintf(log,"Cannot set id session!\n");
+        syslog(LOG_CRIT,"Cannot set id session!\n");
         exit(EXIT_FAILURE);
     }
 
     if ((chdir("/")) < 0) {
-        fprintf(log,"Cannot change working directory!\n");
+        syslog(LOG_CRIT,"Cannot change working directory!\n");
         exit(EXIT_FAILURE);
     }
 
@@ -67,7 +97,10 @@ syslog
     close(STDERR_FILENO);
 
     while (1) {
-            sleep(30); /* wait 30 seconds */
+        syslog(LOG_INFO, "Synchornization START.");
+        syncDir(Config);
+        syslog(LOG_INFO, "Synchornization STOP.");
+        sleep(Config.time);
     }
 
     fclose (log);

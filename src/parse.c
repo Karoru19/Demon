@@ -2,7 +2,7 @@
 
 bool parse (int argc, char* argv[], config *Config) {
     if (argc < 3) {
-        printf("Too few arguments.\n");
+        syslog(LOG_CRIT,"Too few arguments.\n");
         return false;
     }
     else {
@@ -24,11 +24,11 @@ bool parse (int argc, char* argv[], config *Config) {
                 switch (argv[i][x]) {
                 case 't':
                     if (x == 2 && compare(argv[i],"--time") == false) {
-                        printf("Option ERROR!\n");
+                        syslog(LOG_CRIT,"Option ERROR!\n");
                         return false;
                     }
                     if (x == 1 && compare(argv[i],"-t") == false) {
-                        printf("Option ERROR!\n");
+                        syslog(LOG_CRIT,"Option ERROR!\n");
                         return false;
                     }
                     if (argc >= i+1) {
@@ -53,6 +53,7 @@ bool parse (int argc, char* argv[], config *Config) {
                             Config->time = hour;
                             break;
                         default:
+                            syslog(LOG_CRIT,"Option ERROR!\n");
                             break;
                         }
                         for (j = len-1; j >= 0; j--) {
@@ -62,7 +63,7 @@ bool parse (int argc, char* argv[], config *Config) {
                                 v+=tmp-'0';
                             }
                             else {
-                                printf("Option ERROR!\n");
+                                syslog(LOG_CRIT,"Option ERROR!\n");
                                 return false;
                             }
                         }
@@ -70,28 +71,28 @@ bool parse (int argc, char* argv[], config *Config) {
                         i++;
                     }
                     else {
-                        printf("Option ERROR!\n");
+                        syslog(LOG_CRIT,"Option ERROR!\n");
                         return false;
                     }
                     break;
                 case 'r':
                     if (x == 2 && compare(argv[i],"--recursive") == false) {
-                        printf("Option ERROR!\n");
+                        syslog(LOG_CRIT,"Option ERROR!\n");
                         return false;
                     }
                     if (x == 1 && compare(argv[i],"-r") == false) {
-                        printf("Option ERROR!\n");
+                        syslog(LOG_CRIT,"Option ERROR!\n");
                         return false;
                     }
                     Config->recursive=true;
                     break;
                 case 'b':
                     if (x == 2 && compare(argv[i],"--byte") == false) {
-                        printf("Option ERROR!\n");
+                        syslog(LOG_CRIT,"Option ERROR!\n");
                         return false;
                     }
                     if (x == 1 && compare(argv[i],"-b") == false) {
-                        printf("Option ERROR!\n");
+                        syslog(LOG_CRIT,"Option ERROR!\n");
                         return false;
                     }
                     if (argc >= i+1) {
@@ -122,6 +123,7 @@ bool parse (int argc, char* argv[], config *Config) {
                             Config->byte = GB;
                             break;
                         default:
+                            syslog(LOG_CRIT,"Option ERROR!\n");
                             break;
                         }
                         for (j = 0; j < len; j++) {
@@ -131,7 +133,7 @@ bool parse (int argc, char* argv[], config *Config) {
                                 v+=tmp-'0';
                             }
                             else {
-                                printf("Option ERROR!\n");
+                                syslog(LOG_CRIT,"Option ERROR!\n");
                                 return false;
                             }
                         }
@@ -139,7 +141,7 @@ bool parse (int argc, char* argv[], config *Config) {
                         i++;
                     }
                     else {
-                        printf("Option ERROR!\n");
+                        syslog(LOG_CRIT,"Option ERROR!\n");
                         return false;
                     }
                     break;

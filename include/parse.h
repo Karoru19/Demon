@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include <math.h>
 #include <stdlib.h>
+#include <syslog.h>
 
 bool parse (int argc, char* argv[], config *Config);
 
