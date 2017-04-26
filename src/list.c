@@ -49,7 +49,9 @@ void showList (list *first)
 
 int listSize (list *first)
 {
+
     list *wsk = first;
+
     int x=1;
 
     while (wsk->next!=NULL)
@@ -70,12 +72,14 @@ bool deleteItem (list *first, string item)
     list *wsk = first;
     list *temp;
 
-    if(compare(wsk->path, item))
+    if(compare(first->path, item))
     {
       first = wsk->next;
+
       wsk->name = NULL;
       wsk->path = NULL;
       free(wsk);
+
       return true;
     }
     while(wsk != NULL) {
@@ -88,6 +92,26 @@ bool deleteItem (list *first, string item)
         }
         wsk = wsk->next;
     }
+    return false;
+}
+
+    temp = wsk;
+    wsk = wsk->next;
+
+    while(wsk != NULL)
+    {
+      if(compare(wsk->path, item))
+      {
+        temp->next = wsk->next;
+        wsk->name = NULL;
+        wsk->path = NULL;
+        free(wsk);
+        return true;
+      }
+      temp = wsk;
+      wsk = wsk->next;
+    }
+
     return false;
 }
 

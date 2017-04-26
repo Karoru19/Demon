@@ -9,45 +9,7 @@
 #include "dir.h"
 #include "list.h"
 #include "parse.h"
-
-void sync_dir (string source, string target)  //todo
-{
-  DIR           *ds,*dt;
-  struct dirent *dirS,*dirT;
-  ds = opendir(source);
-  dt = opendir(target);
-
-  dirT = readdir(dt);
-
-  while((dirS = readdir(ds)) != NULL)
-  {
-
-  }
-}
-
-int copy_file(string fileName)
-	{
-		FILE  *original, *copy;
-		int  a;
-    string target = "~/Pulpit/test2/plik.txt";
-
-		original = fopen(fileName, "rb");
-		copy = fopen(target, "wb");
-
-		while(1)
-		{
-			a  =  fgetc(original);
-
-			if(!feof(original))
-				fputc(a, copy);
-			else
-				break;
-		}
-
-		fclose(copy);
-		fclose(original);
-		return  0;
-	}
+#include "sync.h"
 
 int main(int argc, char* argv[]) {
 
@@ -91,18 +53,6 @@ SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-
     printf("%zd\n",Config.byte);
     printf("%d\n",Config.time);
 
-    if (argc == 4)
-    {
-      char* p;
-      errno = 0;
-      int arg = strtol(argv[3], &p, 10);  //convert char->int
-      if (*p != '\0' || errno != 0) {printf("lolxd\n");return 1;} //check for correct value
-      Config.time = arg;
-
-      printf("Synctime: %d\n", Config.time);
-    }
-    exit(EXIT_SUCCESS);
-
     pid_t pid, sid;
 
     pid = fork();
@@ -131,6 +81,9 @@ SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-
         fprintf(log,"Cannot change working directory!\n");
         exit(EXIT_FAILURE);
     }
+
+    initSync(&Config);
+    syncDir();
 
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
