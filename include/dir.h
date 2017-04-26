@@ -1,11 +1,18 @@
 #ifndef DIR_H
 #define DIR_H
 
+#include <fcntl.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <time.h>
+#include <unistd.h>
 #include <dirent.h>
+#include <unistd.h>
 #include "cstring.h"
+#include "list.h"
+#include "config.h"
 
 #define DIRECTORY 1
 #define REGULAR 2
@@ -13,6 +20,7 @@
 
 bool isDirectory(const char* path);
 int getFileType (const char* path);
-void checkDirectory (const char *path, bool recursive);
+list *checkDirectory(char *path, bool recursive, list *first);
+void deleteFiles(config Conf);
 
 #endif

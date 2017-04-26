@@ -17,32 +17,10 @@ int main(int argc, char* argv[]) {
 stat() - for getting info about las modification date and file size and so on
 utime()/utimes() - for setting modification date
 SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-sigusr2
+syslog
 */
 
-    checkDirectory(argv[1], false);
-    printf("%s\n",isDirectory(argv[2])==true? "true":"false");
-    checkDirectory(argv[2], false);
-//    list *root;
-//    root = malloc(sizeof(list));
-//    addToList("testowanie","na ekranie",root);
-//    addToList("test", "test2", root);
-//    showList(root);
-//    listSize(root);
-//    deleteItem(root, "test2");
-//    printf("\n");
-//    showList(root);
-//    printf("List size: %d\n", listSize(root));
-//    printf("\n");
-//    deleteList(root);
-//    showList(root);
-
-    //string zmienna = malloc(sizeof(char)*strlen(argv[1]));
-    //strcpy(zmienna, argv[1]);
-    //check_directory(argv[2], true);
-    //copy_file("~/Pulpit/test1/plik.txt");
-
     config Config = default_config();
-
     if (parse(argc, argv, &Config) == false) {
         printf("Parsing failure!\n");
         exit(EXIT_FAILURE);
@@ -52,6 +30,8 @@ SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-
     printf("%s\n",Config.recursive == 1 ? "recursive":"not recursive");
     printf("%zd\n",Config.byte);
     printf("%d\n",Config.time);
+    syncDir(Config);
+    exit(EXIT_SUCCESS);
 
     pid_t pid, sid;
 
@@ -81,9 +61,6 @@ SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-
         fprintf(log,"Cannot change working directory!\n");
         exit(EXIT_FAILURE);
     }
-
-    initSync(&Config);
-    syncDir();
 
     close(STDIN_FILENO);
     close(STDOUT_FILENO);

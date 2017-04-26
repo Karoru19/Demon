@@ -6,8 +6,6 @@
 #include <string.h>
 #include "bool.h"
 
-typedef char* string;
-
-bool compare(string str1, string str2);
+bool compare(char* str1, char* str2);
 
 #endif

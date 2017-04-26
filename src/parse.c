@@ -31,7 +31,7 @@ bool parse (int argc, char* argv[], config *Config) {
                         printf("Option ERROR!\n");
                         return false;
                     }
-                    if (argc > i+1) {
+                    if (argc >= i+1) {
                         int len=strlen(argv[i+1])-1, j, v=0;
                         switch (argv[i+1][len]) {
                         case 'S':
@@ -94,7 +94,7 @@ bool parse (int argc, char* argv[], config *Config) {
                         printf("Option ERROR!\n");
                         return false;
                     }
-                    if (argc > i+1) {
+                    if (argc >= i+1) {
                         int len=strlen(argv[i+1])-1, j, v=0;
                         switch (argv[i+1][len]) {
                         case 'B':

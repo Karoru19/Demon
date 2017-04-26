@@ -15,8 +15,8 @@ typedef struct {
 	bool recursive;
 	int time;
 	size_t byte;
-	string pathFrom;
-	string pathTo;
+    char* pathFrom;
+    char* pathTo;
 } config;
 
 config default_config ();
