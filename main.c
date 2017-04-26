@@ -46,11 +46,11 @@ int main(int argc, char* argv[]) {
 
     if (argc == 2 && argv[1][0] == '-') {
         switch (argv[1][1]) {
-        case 'F':
+        case 'W':
             syslog(LOG_INFO, "SIGUSR1 is send.");
             kill(pidCheck(), SIGUSR1);
             return EXIT_SUCCESS;
-        case 'f':
+        case 'w':
             syslog(LOG_INFO, "SIGUSR1 is send.");
             kill(pidCheck(), SIGUSR1);
             return EXIT_SUCCESS;
