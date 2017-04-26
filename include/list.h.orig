@@ -1,0 +1,26 @@
+#ifndef LIST_H
+#define LIST_H
+
+#include "cstring.h"
+#include "bool.h"
+
+typedef struct lista
+{
+  string name;
+  string path;
+  struct lista *next;
+}list;
+
+<<<<<<< HEAD
+void addToList (string name, string path, el_listy *pierwszy);
+void showList (el_listy *pierwszy);
+void deleteList (el_listy *head);
+el_listy* reverseList (el_listy *pierwszy);
+=======
+void addToList (string name, string path, list *first);
+void showList (list *first);
+int listSize(list *first);
+bool deleteItem (list *first, string item);
+>>>>>>> fc796c8629000e3abab1cc8977dac25afcaaf074
+
+#endif

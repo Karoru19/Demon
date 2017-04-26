@@ -25,11 +25,11 @@ void sync_dir (string source, string target)  //todo
   }
 }
 
-int copy_file(string fileName)
+int copy_file(char *fileName)
 	{
 		FILE  *original, *copy;
 		int  a;
-    string target = "~/Pulpit/test2/plik.txt";
+    string target = "/home/macwie/Pulpit/test2/plik.txt";
 
 		original = fopen(fileName, "rb");
 		copy = fopen(target, "wb");
@@ -51,36 +51,53 @@ int copy_file(string fileName)
 
 int main(int argc, char* argv[]) {
 
+<<<<<<< HEAD
+    el_listy *root;
+    root = malloc(sizeof(el_listy));
+    addToList("testowanie","na ekranie",root);
+    addToList("test", "test2", root);
+    addToList("testxd", "testlol", root);
+    addToList("testlol", "testxd", root);
+    showList(root);
+    printf("\n");
+    root = reverseList(root);
+    showList(root);
+    printf("\n");
+    deleteList(root);
+    showList(root);
+=======
 /* NOTES
 stat() - for getting info about las modification date and file size and so on
 utime()/utimes() - for setting modification date
 SIGUSR1 - http://stackoverflow.com/questions/6168636/how-to-trigger-sigusr1-and-sigusr2
 */
 
-    checkDirectory(argv[1], false);
-    printf("%s\n",isDirectory(argv[2])==true? "true":"false");
-    checkDirectory(argv[2], false);
-//    list *root;
-//    root = malloc(sizeof(list));
-//    addToList("testowanie","na ekranie",root);
-//    addToList("test", "test2", root);
-//    showList(root);
-//    listSize(root);
-//    deleteItem(root, "test2");
-//    printf("\n");
-//    showList(root);
-//    printf("List size: %d\n", listSize(root));
-//    printf("\n");
-//    deleteList(root);
-//    showList(root);
+    list *root;
+        root = malloc(sizeof(list));
+        root->name = "test5";
+        root->path = "test6";
+        root->next = NULL;
+        addToList("test", "test2", root);
+        showList(root);
+        listSize(root);
+        deleteItem(root, "test2");
+        printf("\n");
+        showList(root);
+        printf("List size: %d\n", listSize(root));
 
-    //string zmienna = malloc(sizeof(char)*strlen(argv[1]));
-    //strcpy(zmienna, argv[1]);
-    //check_directory(argv[2], true);
-    //copy_file("~/Pulpit/test1/plik.txt");
+        check_directory(argv[1], true);
+        copy_file("/home/macwie/Pulpit/test/plik.txt");
+
+//    if (argc > 1)
+//    {
+//        check_directory(argv[1], true);
+//        exit(EXIT_SUCCESS);
+//    }
+>>>>>>> fc796c8629000e3abab1cc8977dac25afcaaf074
 
     config Config = default_config();
 
+    printf("%s\n%s\n",argv[1],argv[2]);
     if (parse(argc, argv, &Config) == false) {
         printf("Parsing failure!\n");
         exit(EXIT_FAILURE);

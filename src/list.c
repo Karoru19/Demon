@@ -78,6 +78,18 @@ bool deleteItem (list *first, string item)
       free(wsk);
       return true;
     }
+    while(wsk != NULL) {
+        if(compare(wsk->path, item)) {
+            wsk->next = temp->next;
+            temp->name = NULL;
+            temp->path = NULL;
+            free(temp);
+            return true;
+        }
+        wsk = wsk->next;
+    }
+    return false;
+}
 
 void deleteList(list *head) {
     while (head) {
