@@ -27,8 +27,6 @@ int pidCheck(){
         }
         fclose( pidId );
     }
-    //int pom = 0, i;
-    //for (i = 0; i < strlen(s); i++) if (s[i]-'0' > 0 || s[i]-'9' > 0) pom = pom*10+(s[i]-'0');
     return s;
 }
 
