@@ -8,6 +8,7 @@ void createFile(char* path) {
 }
 
 void copyRW(char* source, char* target) {
+    syslog(LOG_INFO, "Copy by RW.");
     int fd_to, fd_from;
     char buffer[16];
     size_t offset = 0;
@@ -30,6 +31,7 @@ void copyRW(char* source, char* target) {
 }
 
 void copyMmap(char* source, char* target) {
+    syslog(LOG_INFO, "Copy by Mmap.");
     int fd_to, fd_from;
     char *src, *tg;
     size_t size;
@@ -42,7 +44,7 @@ void copyMmap(char* source, char* target) {
     ftruncate(fd_to, size);
     tg = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd_to, 0);
 
-    memcpy(fd_to, fd_from, size);
+    memcpy(tg, src, size);
     munmap(src, size);
     munmap(tg, size);
 

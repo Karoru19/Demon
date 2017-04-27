@@ -12,6 +12,8 @@
 #include "parse.h"
 #include "sync.h"
 
+int processId;
+
 int pidCheck(){
     FILE *pidId;
     int s;
@@ -34,6 +36,7 @@ void pidSave(int pid) {
     FILE *pidId;
     pidId = fopen("/tmp/pidId.txt", "w");
     fprintf(pidId, "%d\n", pid);
+    fclose(pidId);
 }
 
 void wakeUp() {
@@ -43,16 +46,27 @@ void wakeUp() {
 int main(int argc, char* argv[]) {
 
     signal(SIGUSR1, wakeUp);
+    processId = pidCheck();
 
     if (argc == 2 && argv[1][0] == '-') {
         switch (argv[1][1]) {
         case 'W':
             syslog(LOG_INFO, "SIGUSR1 is send.");
-            kill(pidCheck(), SIGUSR1);
+            kill(processId, SIGUSR1);
             return EXIT_SUCCESS;
         case 'w':
             syslog(LOG_INFO, "SIGUSR1 is send.");
-            kill(pidCheck(), SIGUSR1);
+            kill(processId, SIGUSR1);
+            return EXIT_SUCCESS;  
+        case 'S':
+            syslog(LOG_INFO, "SIGKILL is send.");
+            syslog(LOG_INFO, "Shut Down demon.");
+            kill(processId,SIGKILL);
+            return EXIT_SUCCESS;
+        case 's':
+            syslog(LOG_INFO, "SIGKILL is send.");
+            syslog(LOG_INFO, "Shut Down demon.");
+            kill(processId,SIGKILL);
             return EXIT_SUCCESS;
         }
         return EXIT_FAILURE;
@@ -101,6 +115,5 @@ int main(int argc, char* argv[]) {
         sleep(Config.time);
     }
 
-    fclose (log);
     exit(EXIT_SUCCESS);
 }

@@ -25,7 +25,7 @@ void syncDir (config Conf) {
         int size = st.st_size;
         if(size >= Conf.byte) mmap = true;
 
-        if (access(source, F_OK) == -1) {
+        if (access(target, F_OK) == -1) {
             if (first->type == REGULAR) {
                 if(!compareTime(source, target)) {
                     mmap == true ? copyMmap(source, target) : copyRW(source, target);

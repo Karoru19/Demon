@@ -56,7 +56,7 @@ bool parse (int argc, char* argv[], config *Config) {
                             syslog(LOG_CRIT,"Option ERROR!\n");
                             break;
                         }
-                        for (j = len-1; j >= 0; j--) {
+                        for (j = 0; j < len; j++) {
                             if (isdigit(argv[i+1][j])){
                                 char tmp = argv[i+1][j];
                                 v*=10;
